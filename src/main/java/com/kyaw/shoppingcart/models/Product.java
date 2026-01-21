@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "product")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,7 +16,9 @@ public class Product {
     private Double price;
     @Column(columnDefinition = "TEXT")
     private String description;
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
+    @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
     private String imageFileName;
 
@@ -89,5 +92,19 @@ public class Product {
 
     public void setImageFileName(String imageFileName) {
         this.imageFileName = imageFileName;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        var now = new Date();
+        if (createdAt == null) {
+            createdAt = now;
+        }
+        updatedAt = now;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = new Date();
     }
 }
