@@ -1,13 +1,32 @@
 package com.kyaw.shoppingcart.controllers;
 
-import com.kyaw.shoppingcart.repositorys.ProductsRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.kyaw.shoppingcart.dto.ProductDto;
+import com.kyaw.shoppingcart.service.ProductService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
+@RequestMapping("/products")
 public class ProductController {
-    @GetMapping("/products")
-    public String getProducts() {
-        return "List of products";
+    private final ProductService productService;
+
+    public ProductController(ProductService productService) {
+        this.productService = productService;
     }
+
+    //Create
+    @PostMapping("/create")
+    public ProductDto createProduct(
+            @RequestBody ProductDto productDto) {
+
+        return productService.createProduct(productDto);
+    }
+
+    //Get all
+    @GetMapping
+    public List<ProductDto> getAllProducts() {
+        return productService.getAllProducts();
+    }
+
 }
