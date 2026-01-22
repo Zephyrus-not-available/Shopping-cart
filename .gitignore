@@ -38,7 +38,6 @@ build/
 *.env
 *.env.*
 application-*.yml
-application-*.properties
 
 # OS cruft
 .DS_Store
